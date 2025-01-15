@@ -1,0 +1,7 @@
+{
+    "serviceGroup": "vpce",
+    "module": "github.com/state-cloud/statecloud-sdk-go",
+    "clients": [
+        "VpcEndpoint"
+    ]
+}
