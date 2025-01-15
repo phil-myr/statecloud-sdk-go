@@ -47,6 +47,12 @@ type ContainerGroupClient interface {
 	Log(context context.Context, req *containergroup.DescribeContainerLogRequest, reqOpt ...config.RequestOption) (resp *containergroup.DescribeContainerLogResponse, rawResponse *protocol.Response, err error)
 
 	Monitor(context context.Context, req *containergroup.DescribeContainerGroupMetricRequest, reqOpt ...config.RequestOption) (resp *containergroup.DescribeContainerGroupMetricResponse, rawResponse *protocol.Response, err error)
+
+	ResizeContainerGroupVolume(context context.Context, req *containergroup.ResizeContainerGroupVolumeRequest, reqOpt ...config.RequestOption) (resp *containergroup.ResizeContainerGroupVolumeResponse, rawResponse *protocol.Response, err error)
+
+	CreateOpsTask(context context.Context, req *containergroup.CreateOpsTaskRequest, reqOpt ...config.RequestOption) (resp *containergroup.CreateOpsTaskResponse, rawResponse *protocol.Response, err error)
+
+	DescribeOpsTask(context context.Context, req *containergroup.DescribeOpsTaskRequest, reqOpt ...config.RequestOption) (resp *containergroup.DescribeOpsTaskResponse, rawResponse *protocol.Response, err error)
 }
 
 type containerGroupClient struct {
@@ -392,6 +398,66 @@ func (s *containerGroupClient) Monitor(ctx context.Context, req *containergroup.
 	return resp, rawResponse, nil
 }
 
+func (s *containerGroupClient) ResizeContainerGroupVolume(ctx context.Context, req *containergroup.ResizeContainerGroupVolumeRequest, reqOpt ...config.RequestOption) (resp *containergroup.ResizeContainerGroupVolumeResponse, rawResponse *protocol.Response, err error) {
+	openapiResp := &openapi.OpenapiResponse{}
+	openapiResp.ReturnObj = &resp
+	ret, err := s.client.R().
+		SetContext(ctx).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
+		SetBodyParam(req).
+		SetRequestOption(reqOpt...).
+		SetResult(openapiResp).
+		Execute(http.MethodPost, "/eci/api/v1/containers/resizeContainerGroupVolume")
+	if err != nil {
+		return nil, nil, err
+	}
+
+	rawResponse = ret.RawResponse
+	return resp, rawResponse, nil
+}
+
+func (s *containerGroupClient) CreateOpsTask(ctx context.Context, req *containergroup.CreateOpsTaskRequest, reqOpt ...config.RequestOption) (resp *containergroup.CreateOpsTaskResponse, rawResponse *protocol.Response, err error) {
+	openapiResp := &openapi.OpenapiResponse{}
+	openapiResp.ReturnObj = &resp
+	ret, err := s.client.R().
+		SetContext(ctx).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
+		SetBodyParam(req).
+		SetRequestOption(reqOpt...).
+		SetResult(openapiResp).
+		Execute(http.MethodPost, "/eci/api/v1/containers/createOpsTask")
+	if err != nil {
+		return nil, nil, err
+	}
+
+	rawResponse = ret.RawResponse
+	return resp, rawResponse, nil
+}
+
+func (s *containerGroupClient) DescribeOpsTask(ctx context.Context, req *containergroup.DescribeOpsTaskRequest, reqOpt ...config.RequestOption) (resp *containergroup.DescribeOpsTaskResponse, rawResponse *protocol.Response, err error) {
+	openapiResp := &openapi.OpenapiResponse{}
+	openapiResp.ReturnObj = &resp
+	ret, err := s.client.R().
+		SetContext(ctx).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
+		SetBodyParam(req).
+		SetRequestOption(reqOpt...).
+		SetResult(openapiResp).
+		Execute(http.MethodPost, "/eci/api/v1/containers/describeOpsTask")
+	if err != nil {
+		return nil, nil, err
+	}
+
+	rawResponse = ret.RawResponse
+	return resp, rawResponse, nil
+}
+
 var defaultContainerGroupClient, _ = NewContainerGroupClient(baseDomain)
 
 func ConfigDefaultContainerGroupClient(ops ...Option) (err error) {
@@ -453,4 +519,16 @@ func Log(context context.Context, req *containergroup.DescribeContainerLogReques
 
 func Monitor(context context.Context, req *containergroup.DescribeContainerGroupMetricRequest, reqOpt ...config.RequestOption) (resp *containergroup.DescribeContainerGroupMetricResponse, rawResponse *protocol.Response, err error) {
 	return defaultContainerGroupClient.Monitor(context, req, reqOpt...)
+}
+
+func ResizeContainerGroupVolume(context context.Context, req *containergroup.ResizeContainerGroupVolumeRequest, reqOpt ...config.RequestOption) (resp *containergroup.ResizeContainerGroupVolumeResponse, rawResponse *protocol.Response, err error) {
+	return defaultContainerGroupClient.ResizeContainerGroupVolume(context, req, reqOpt...)
+}
+
+func CreateOpsTask(context context.Context, req *containergroup.CreateOpsTaskRequest, reqOpt ...config.RequestOption) (resp *containergroup.CreateOpsTaskResponse, rawResponse *protocol.Response, err error) {
+	return defaultContainerGroupClient.CreateOpsTask(context, req, reqOpt...)
+}
+
+func DescribeOpsTask(context context.Context, req *containergroup.DescribeOpsTaskRequest, reqOpt ...config.RequestOption) (resp *containergroup.DescribeOpsTaskResponse, rawResponse *protocol.Response, err error) {
+	return defaultContainerGroupClient.DescribeOpsTask(context, req, reqOpt...)
 }

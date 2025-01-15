@@ -53,6 +53,9 @@ func (s *dataCacheClient) CreateDataCache(ctx context.Context, req *datacache.Cr
 	openapiResp.ReturnObj = &resp
 	ret, err := s.client.R().
 		SetContext(ctx).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).
@@ -70,10 +73,13 @@ func (s *dataCacheClient) DescribeDataCaches(ctx context.Context, req *datacache
 	openapiResp.ReturnObj = &resp
 	ret, err := s.client.R().
 		SetContext(ctx).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).
-		Execute(http.MethodDelete, "/eci/api/v1/dataCache/describeDataCaches")
+		Execute(http.MethodPost, "/eci/api/v1/dataCache/describeDataCaches")
 	if err != nil {
 		return nil, nil, err
 	}
@@ -89,6 +95,9 @@ func (s *dataCacheClient) UpdateDataCache(ctx context.Context, req *datacache.Up
 		SetContext(ctx).
 		SetPathParams(map[string]string{
 			"dataCacheId": req.GetDataCacheId(),
+		}).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
 		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
@@ -113,7 +122,7 @@ func (s *dataCacheClient) DeleteDataCache(ctx context.Context, req *datacache.De
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).
-		Execute(http.MethodGet, "/eci/api/v1/dataCache/deleteDataCache/:dataCacheId")
+		Execute(http.MethodDelete, "/eci/api/v1/dataCache/deleteDataCache/:dataCacheId")
 	if err != nil {
 		return nil, nil, err
 	}
@@ -130,6 +139,9 @@ func (s *dataCacheClient) CopyDataCache(ctx context.Context, req *datacache.Copy
 		SetPathParams(map[string]string{
 			"dataCacheId": req.GetDataCacheId(),
 			"azName":      req.GetAzName(),
+		}).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
 		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
@@ -150,6 +162,9 @@ func (s *dataCacheClient) GetDataCache(ctx context.Context, req *datacache.GetDa
 		SetContext(ctx).
 		SetPathParams(map[string]string{
 			"dataCacheId": req.GetDataCacheId(),
+		}).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
 		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
