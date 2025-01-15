@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
+	"os"
 
 	cli "github.com/state-cloud/client-go/pkg/client"
 	"github.com/state-cloud/client-go/pkg/openapi/config"
@@ -11,11 +12,25 @@ import (
 	commitcontainer "github.com/state-cloud/statecloud-sdk-go/service/eci/types/commitcontainer"
 )
 
+var (
+	accessKey  = ""
+	secretKey  = ""
+	baseDomain = "https://eci-global.ctapi.ctyun.cn"
+)
+
+func init() {
+	accessKey = os.Getenv("CTAPI_AK")
+	secretKey = os.Getenv("CTAPI_SK")
+	domain := os.Getenv("CTAPI_ECI_DOMAIN")
+	if domain != "" {
+		baseDomain = domain
+	}
+}
+
 func main() {
-	baseDomain := "https://eci-global.ctapi-test.ctyun.cn:21443"
 	config := &config.OpenapiConfig{
-		AccessKey: "b1accda96cb74be390009d2144923466",
-		SecretKey: "*",
+		AccessKey: accessKey,
+		SecretKey: secretKey,
 	}
 
 	options := []eci.Option{
