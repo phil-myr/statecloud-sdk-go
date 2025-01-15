@@ -1,6 +1,6 @@
 [English](README.md) | 简体中文
 
-# State Cloud Eci SDK for Go
+# State Cloud Product SDK For Go
 
 ## 要求
 - 您需要确保本地安装的 go 环境版本大于 1.12.0.
