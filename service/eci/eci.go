@@ -2,12 +2,6 @@
 
 package eci
 
-import (
-	"crypto/tls"
-
-	cli "github.com/state-cloud/client-go/pkg/client"
-)
-
 var baseDomain = "https://eci-global.ctapi.ctyun.cn"
 
 type ClientSet interface {
@@ -35,12 +29,6 @@ type clientSet struct {
 }
 
 func NewClientSet(baseDomain string, options ...Option) (ClientSet, error) {
-	defaultOpt := []Option{
-		WithClientOption(cli.WithTLSConfig(&tls.Config{
-			InsecureSkipVerify: true,
-		})),
-	}
-	options = append(defaultOpt, options...)
 	containerGroupCli, err := NewContainerGroupClient(baseDomain, options...)
 	if err != nil {
 		return nil, err
