@@ -1,6 +1,6 @@
 English | [简体中文](README-CN.md)
 
-# State Cloud Eci SDK for Go
+# State Cloud Product SDK For Go
 
 ## Requirements
 - It's necessary for you to make sure your system have installed Go environment which version greater than 1.12.0.
