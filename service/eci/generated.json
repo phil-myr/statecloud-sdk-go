@@ -2,14 +2,15 @@
     "serviceGroup": "eci",
     "module": "github.com/state-cloud/statecloud-sdk-go",
     "clients": [
-        "ContainerGroup",
         "ImageCache",
+        "ContainerGroup",
         "DataCache",
         "VirtualNode",
         "Price",
         "CommitContainerTask",
         "Tag",
         "Region",
+        "Flavor",
         "EnterpriseProject"
     ]
 }

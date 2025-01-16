@@ -11,26 +11,28 @@ import (
 var baseDomain = "https://eci-global.ctapi.ctyun.cn"
 
 type ClientSet interface {
-	ContainerGroup() ContainerGroupClient
 	ImageCache() ImageCacheClient
+	ContainerGroup() ContainerGroupClient
 	DataCache() DataCacheClient
 	VirtualNode() VirtualNodeClient
 	Price() PriceClient
 	CommitContainerTask() CommitContainerTaskClient
 	Tag() TagClient
 	Region() RegionClient
+	Flavor() FlavorClient
 	EnterpriseProject() EnterpriseProjectClient
 }
 
 type clientSet struct {
-	containerGroupCli      ContainerGroupClient
 	imageCacheCli          ImageCacheClient
+	containerGroupCli      ContainerGroupClient
 	dataCacheCli           DataCacheClient
 	virtualNodeCli         VirtualNodeClient
 	priceCli               PriceClient
 	commitContainerTaskCli CommitContainerTaskClient
 	tagCli                 TagClient
 	regionCli              RegionClient
+	flavorCli              FlavorClient
 	enterpriseProjectCli   EnterpriseProjectClient
 }
 
@@ -41,11 +43,11 @@ func NewClientSet(baseDomain string, options ...Option) (ClientSet, error) {
 		})),
 	}
 	options = append(defaultOpt, options...)
-	containerGroupCli, err := NewContainerGroupClient(baseDomain, options...)
+	imageCacheCli, err := NewImageCacheClient(baseDomain, options...)
 	if err != nil {
 		return nil, err
 	}
-	imageCacheCli, err := NewImageCacheClient(baseDomain, options...)
+	containerGroupCli, err := NewContainerGroupClient(baseDomain, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -73,30 +75,35 @@ func NewClientSet(baseDomain string, options ...Option) (ClientSet, error) {
 	if err != nil {
 		return nil, err
 	}
+	flavorCli, err := NewFlavorClient(baseDomain, options...)
+	if err != nil {
+		return nil, err
+	}
 	enterpriseProjectCli, err := NewEnterpriseProjectClient(baseDomain, options...)
 	if err != nil {
 		return nil, err
 	}
 
 	return &clientSet{
-		containerGroupCli:      containerGroupCli,
 		imageCacheCli:          imageCacheCli,
+		containerGroupCli:      containerGroupCli,
 		dataCacheCli:           dataCacheCli,
 		virtualNodeCli:         virtualNodeCli,
 		priceCli:               priceCli,
 		commitContainerTaskCli: commitContainerTaskCli,
 		tagCli:                 tagCli,
 		regionCli:              regionCli,
+		flavorCli:              flavorCli,
 		enterpriseProjectCli:   enterpriseProjectCli,
 	}, nil
 }
 
-func (cs *clientSet) ContainerGroup() ContainerGroupClient {
-	return cs.containerGroupCli
-}
-
 func (cs *clientSet) ImageCache() ImageCacheClient {
 	return cs.imageCacheCli
+}
+
+func (cs *clientSet) ContainerGroup() ContainerGroupClient {
+	return cs.containerGroupCli
 }
 
 func (cs *clientSet) DataCache() DataCacheClient {
@@ -121,6 +128,10 @@ func (cs *clientSet) Tag() TagClient {
 
 func (cs *clientSet) Region() RegionClient {
 	return cs.regionCli
+}
+
+func (cs *clientSet) Flavor() FlavorClient {
+	return cs.flavorCli
 }
 
 func (cs *clientSet) EnterpriseProject() EnterpriseProjectClient {

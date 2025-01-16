@@ -49,6 +49,9 @@ func (s *virtualNodeClient) CreateVirtualNode(ctx context.Context, req *virtualn
 	openapiResp.ReturnObj = &resp
 	ret, err := s.client.R().
 		SetContext(ctx).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).
@@ -69,6 +72,9 @@ func (s *virtualNodeClient) DeleteVirtualNode(ctx context.Context, req *virtualn
 		SetPathParams(map[string]string{
 			"virtualNodeId": req.GetVirtualNodeId(),
 		}).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).
@@ -86,6 +92,9 @@ func (s *virtualNodeClient) UpdateVirtualNode(ctx context.Context, req *virtualn
 	openapiResp.ReturnObj = &resp
 	ret, err := s.client.R().
 		SetContext(ctx).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).
@@ -103,6 +112,9 @@ func (s *virtualNodeClient) DescribeVirtualNodes(ctx context.Context, req *virtu
 	openapiResp.ReturnObj = &resp
 	ret, err := s.client.R().
 		SetContext(ctx).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).

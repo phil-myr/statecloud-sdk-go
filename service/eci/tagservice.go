@@ -47,6 +47,9 @@ func (s *tagClient) BindTag(ctx context.Context, req *tag.BindTagRequest, reqOpt
 	openapiResp.ReturnObj = &resp
 	ret, err := s.client.R().
 		SetContext(ctx).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).
@@ -64,6 +67,9 @@ func (s *tagClient) ListTag(ctx context.Context, req *tag.ListTagRequest, reqOpt
 	openapiResp.ReturnObj = &resp
 	ret, err := s.client.R().
 		SetContext(ctx).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).
@@ -81,6 +87,9 @@ func (s *tagClient) UnbindTag(ctx context.Context, req *tag.UnbindTagRequest, re
 	openapiResp.ReturnObj = &resp
 	ret, err := s.client.R().
 		SetContext(ctx).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).

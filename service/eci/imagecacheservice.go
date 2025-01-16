@@ -26,7 +26,7 @@ type ImageCacheClient interface {
 
 	DescribeImageCache(context context.Context, req *imagecache.DescribeImageCacheRequest, reqOpt ...config.RequestOption) (resp *imagecache.DescribeImageCacheResponse, rawResponse *protocol.Response, err error)
 
-	GetImageCache(context context.Context, req *imagecache.GetImageCacheRequest, reqOpt ...config.RequestOption) (resp *imagecache.GetImageCacheResponse, rawResponse *protocol.Response, err error)
+	UpdateImageCache(context context.Context, req *imagecache.UpdateImageCacheRequest, reqOpt ...config.RequestOption) (resp *imagecache.UpdateImageCacheResponse, rawResponse *protocol.Response, err error)
 }
 
 type imageCacheClient struct {
@@ -49,6 +49,9 @@ func (s *imageCacheClient) CreateImageCache(ctx context.Context, req *imagecache
 	openapiResp.ReturnObj = &resp
 	ret, err := s.client.R().
 		SetContext(ctx).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).
@@ -69,6 +72,9 @@ func (s *imageCacheClient) DeleteImageCache(ctx context.Context, req *imagecache
 		SetPathParams(map[string]string{
 			"imageCacheId": req.GetImageCacheId(),
 		}).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).
@@ -86,6 +92,9 @@ func (s *imageCacheClient) DescribeImageCache(ctx context.Context, req *imagecac
 	openapiResp.ReturnObj = &resp
 	ret, err := s.client.R().
 		SetContext(ctx).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).
@@ -98,7 +107,7 @@ func (s *imageCacheClient) DescribeImageCache(ctx context.Context, req *imagecac
 	return resp, rawResponse, nil
 }
 
-func (s *imageCacheClient) GetImageCache(ctx context.Context, req *imagecache.GetImageCacheRequest, reqOpt ...config.RequestOption) (resp *imagecache.GetImageCacheResponse, rawResponse *protocol.Response, err error) {
+func (s *imageCacheClient) UpdateImageCache(ctx context.Context, req *imagecache.UpdateImageCacheRequest, reqOpt ...config.RequestOption) (resp *imagecache.UpdateImageCacheResponse, rawResponse *protocol.Response, err error) {
 	openapiResp := &openapi.OpenapiResponse{}
 	openapiResp.ReturnObj = &resp
 	ret, err := s.client.R().
@@ -106,10 +115,13 @@ func (s *imageCacheClient) GetImageCache(ctx context.Context, req *imagecache.Ge
 		SetPathParams(map[string]string{
 			"imageCacheId": req.GetImageCacheId(),
 		}).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).
-		Execute(http.MethodGet, "/eci/api/v1/imageCache//deleteImageCache/{imageCacheId}")
+		Execute(http.MethodPut, "/eci/api/v1/imageCache/updateImageCache")
 	if err != nil {
 		return nil, nil, err
 	}
@@ -137,6 +149,6 @@ func DescribeImageCache(context context.Context, req *imagecache.DescribeImageCa
 	return defaultImageCacheClient.DescribeImageCache(context, req, reqOpt...)
 }
 
-func GetImageCache(context context.Context, req *imagecache.GetImageCacheRequest, reqOpt ...config.RequestOption) (resp *imagecache.GetImageCacheResponse, rawResponse *protocol.Response, err error) {
-	return defaultImageCacheClient.GetImageCache(context, req, reqOpt...)
+func UpdateImageCache(context context.Context, req *imagecache.UpdateImageCacheRequest, reqOpt ...config.RequestOption) (resp *imagecache.UpdateImageCacheResponse, rawResponse *protocol.Response, err error) {
+	return defaultImageCacheClient.UpdateImageCache(context, req, reqOpt...)
 }
