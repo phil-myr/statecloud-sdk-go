@@ -45,6 +45,9 @@ func (s *priceClient) DescribePrice(ctx context.Context, req *price.DescribeCont
 	openapiResp.ReturnObj = &resp
 	ret, err := s.client.R().
 		SetContext(ctx).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).
@@ -62,6 +65,9 @@ func (s *priceClient) BatchDescribePrice(ctx context.Context, req *price.BatchDe
 	openapiResp.ReturnObj = &resp
 	ret, err := s.client.R().
 		SetContext(ctx).
+		AddHeaders(map[string]string{
+			"regionId": req.GetRegionId(),
+		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).
