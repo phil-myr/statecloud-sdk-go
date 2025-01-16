@@ -14,6 +14,7 @@ type ClientSet interface {
 	Tag() TagClient
 	Region() RegionClient
 	EnterpriseProject() EnterpriseProjectClient
+	Flavor() FlavorClient
 }
 
 type clientSet struct {
@@ -26,6 +27,7 @@ type clientSet struct {
 	tagCli                 TagClient
 	regionCli              RegionClient
 	enterpriseProjectCli   EnterpriseProjectClient
+	flavorCli              FlavorClient
 }
 
 func NewClientSet(baseDomain string, options ...Option) (ClientSet, error) {
@@ -65,6 +67,10 @@ func NewClientSet(baseDomain string, options ...Option) (ClientSet, error) {
 	if err != nil {
 		return nil, err
 	}
+	flavorCli, err := NewFlavorClient(baseDomain, options...)
+	if err != nil {
+		return nil, err
+	}
 
 	return &clientSet{
 		containerGroupCli:      containerGroupCli,
@@ -76,6 +82,7 @@ func NewClientSet(baseDomain string, options ...Option) (ClientSet, error) {
 		tagCli:                 tagCli,
 		regionCli:              regionCli,
 		enterpriseProjectCli:   enterpriseProjectCli,
+		flavorCli:              flavorCli,
 	}, nil
 }
 
@@ -113,4 +120,8 @@ func (cs *clientSet) Region() RegionClient {
 
 func (cs *clientSet) EnterpriseProject() EnterpriseProjectClient {
 	return cs.enterpriseProjectCli
+}
+
+func (cs *clientSet) Flavor() FlavorClient {
+	return cs.flavorCli
 }
