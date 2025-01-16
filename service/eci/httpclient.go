@@ -506,7 +506,7 @@ func sign(r *request, cfg *apiCfg.OpenapiConfig) error {
 		SetRequestId(utils.GetRandomString(32)).
 		SetHeader(r.header).
 		SetParam(r.queryParam)
-	if r.method == http.MethodPost {
+	if r.method == http.MethodPost || r.method == http.MethodPut {
 		body, err := json.Marshal(r.bodyParam)
 		if err != nil {
 			return err

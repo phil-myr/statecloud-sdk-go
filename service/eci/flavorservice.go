@@ -49,7 +49,7 @@ func (s *flavorClient) DescribeAvailableResource(ctx context.Context, req *flavo
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
 		SetResult(openapiResp).
-		Execute(http.MethodPost, "/eci/api/v1/flavor/describeAvailableResource")
+		Execute(http.MethodPost, "/eci/api/v1/containers/describeAvailableResource")
 	if err != nil {
 		return nil, nil, err
 	}
