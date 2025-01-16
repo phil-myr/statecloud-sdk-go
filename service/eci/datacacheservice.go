@@ -26,7 +26,7 @@ type DataCacheClient interface {
 
 	UpdateDataCache(context context.Context, req *datacache.UpdateDataCacheRequest, reqOpt ...config.RequestOption) (resp *datacache.UpdateDataCacheResponse, rawResponse *protocol.Response, err error)
 
-	DeleteDataCache(context context.Context, req *datacache.DeleteDataCacheRequest, reqOpt ...config.RequestOption) (resp *datacache.DeleteDataCacheResponse, rawResponse *protocol.Response, err error)
+	DeleteDataCache(context context.Context, req *datacache.DeleteDataCacheRequest, reqOpt ...config.RequestOption) (resp *datacache.DescribeDataCachesRequest, rawResponse *protocol.Response, err error)
 
 	CopyDataCache(context context.Context, req *datacache.CopyDataCacheRequest, reqOpt ...config.RequestOption) (resp *datacache.CopyDataCacheResponse, rawResponse *protocol.Response, err error)
 
@@ -111,16 +111,13 @@ func (s *dataCacheClient) UpdateDataCache(ctx context.Context, req *datacache.Up
 	return resp, rawResponse, nil
 }
 
-func (s *dataCacheClient) DeleteDataCache(ctx context.Context, req *datacache.DeleteDataCacheRequest, reqOpt ...config.RequestOption) (resp *datacache.DeleteDataCacheResponse, rawResponse *protocol.Response, err error) {
+func (s *dataCacheClient) DeleteDataCache(ctx context.Context, req *datacache.DeleteDataCacheRequest, reqOpt ...config.RequestOption) (resp *datacache.DescribeDataCachesRequest, rawResponse *protocol.Response, err error) {
 	openapiResp := &openapi.OpenapiResponse{}
 	openapiResp.ReturnObj = &resp
 	ret, err := s.client.R().
 		SetContext(ctx).
 		SetPathParams(map[string]string{
 			"dataCacheId": req.GetDataCacheId(),
-		}).
-		AddHeaders(map[string]string{
-			"regionId": req.GetRegionId(),
 		}).
 		SetBodyParam(req).
 		SetRequestOption(reqOpt...).
@@ -200,7 +197,7 @@ func UpdateDataCache(context context.Context, req *datacache.UpdateDataCacheRequ
 	return defaultDataCacheClient.UpdateDataCache(context, req, reqOpt...)
 }
 
-func DeleteDataCache(context context.Context, req *datacache.DeleteDataCacheRequest, reqOpt ...config.RequestOption) (resp *datacache.DeleteDataCacheResponse, rawResponse *protocol.Response, err error) {
+func DeleteDataCache(context context.Context, req *datacache.DeleteDataCacheRequest, reqOpt ...config.RequestOption) (resp *datacache.DescribeDataCachesRequest, rawResponse *protocol.Response, err error) {
 	return defaultDataCacheClient.DeleteDataCache(context, req, reqOpt...)
 }
 

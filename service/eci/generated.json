@@ -10,7 +10,6 @@
         "CommitContainerTask",
         "Tag",
         "Region",
-        "EnterpriseProject",
-        "Flavor"
+        "EnterpriseProject"
     ]
 }
